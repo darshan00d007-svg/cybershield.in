@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7f6">
+    <title>CYBERSHIELD — Stay safe from cyber scams</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #172b35;
+            --muted: #65757a;
+            --line: #e1e9e7;
+            --surface: #ffffff;
+            --canvas: #f4f7f6;
+            --blue: #14796f;
+            --blue-dark: #0e625b;
+            --blue-soft: #edf6f4;
+            --green: #16845b;
+            --orange: #bd6b14;
+            --red: #c23a48;
+            --shadow: 0 18px 55px rgba(25, 54, 53, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            isolation: isolate;
+            overflow-x: hidden;
+            min-width: 320px;
+            margin: 0;
+            background:
+                radial-gradient(ellipse at 85% 4%, rgba(20, 121, 111, 0.09), transparent 34rem),
+                var(--canvas);
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.5;
+        }
+
+        .background-shield {
+            position: absolute;
+            z-index: -1;
+            top: 90px;
+            right: 0;
+            width: clamp(230px, 34vw, 430px);
+            height: auto;
+            color: #14796f;
+            opacity: 0.055;
+            pointer-events: none;
+        }
+
+        button,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:disabled {
+            cursor: wait;
+            opacity: 0.65;
+        }
+
+        .topbar {
+            display: flex;
+            width: min(1120px, calc(100% - 40px));
+            height: 76px;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 auto;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ink);
+            font-size: 17px;
+            font-weight: 750;
+            letter-spacing: -0.04em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 34px;
+            height: 34px;
+            place-items: center;
+            border-radius: 11px;
+            background: var(--blue);
+            color: white;
+        }
+
+        .brand-mark svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .local-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .local-badge::before {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #35a878;
+            content: "";
+        }
+
+        main {
+            width: min(900px, calc(100% - 40px));
+            margin: 50px auto 0;
+        }
+
+        .intro {
+            max-width: 720px;
+            margin: 0 auto 30px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            margin: 0 0 12px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(34px, 6vw, 52px);
+            font-weight: 760;
+            letter-spacing: -0.065em;
+            line-height: 1.08;
+        }
+
+        .intro-copy {
+            max-width: 570px;
+            margin: 16px auto 0;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .checker-card {
+            overflow: hidden;
+            border: 1px solid rgba(220, 231, 227, 0.95);
+            border-radius: 20px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .card-heading {
+            padding: 25px 28px 0;
+            text-align: center;
+        }
+
+        .card-heading h2 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .card-heading p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .form-area {
+            padding: 20px 28px 26px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 164px;
+            resize: vertical;
+            padding: 16px 17px 38px;
+            border: 1px solid #dfe5ef;
+            border-radius: 12px;
+            outline: none;
+            background: #fbfcfe;
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.65;
+            transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+        }
+
+        textarea::placeholder {
+            color: #96a1b3;
+        }
+
+        textarea:focus {
+            border-color: #79b4a7;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(20, 121, 111, 0.1);
+        }
+
+        .char-count {
+            position: absolute;
+            right: 14px;
+            bottom: 10px;
+            color: #8b96a8;
+            font-size: 11px;
+            pointer-events: none;
+        }
+
+        .form-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .sample-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .sample-button {
+            padding: 5px 10px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: white;
+            color: #53617a;
+            font-size: 11px;
+            font-weight: 600;
+            transition: border-color 150ms ease, color 150ms ease;
+        }
+
+        .sample-button:hover {
+            border-color: #b7c5f8;
+            color: var(--blue);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 9px;
+        }
+
+        .button {
+            min-height: 42px;
+            padding: 0 17px;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 750;
+            transition: transform 120ms ease, background 150ms ease, border-color 150ms ease;
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        .button:focus-visible,
+        .sample-button:focus-visible {
+            outline: 3px solid rgba(20, 121, 111, 0.28);
+            outline-offset: 2px;
+        }
+
+        .button-primary {
+            background: var(--blue);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--blue-dark);
+        }
+
+        .button-secondary {
+            border-color: var(--line);
+            background: white;
+            color: #53617a;
+        }
+
+        .button-secondary:hover {
+            border-color: #c9d2e2;
+            background: #f8faff;
+        }
+
+        .form-error {
+            min-height: 20px;
+            margin: 9px 0 -7px;
+            color: var(--red);
+            font-size: 12px;
+        }
+
+        .result {
+            margin: 0 28px 28px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: #fbfdfc;
+        }
+
+        .result[hidden] {
+            display: none;
+        }
+
+        .result-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .score-ring {
+            --score-color: var(--green);
+            --score-angle: 0deg;
+            display: grid;
+            width: 84px;
+            height: 84px;
+            flex: 0 0 84px;
+            place-items: center;
+            border-radius: 50%;
+            background: conic-gradient(var(--score-color) var(--score-angle), #e8edf5 var(--score-angle));
+        }
+
+        .score-inner {
+            display: grid;
+            width: 68px;
+            height: 68px;
+            align-content: center;
+            justify-items: center;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .score-value {
+            font-size: 20px;
+            font-weight: 780;
+            letter-spacing: -0.06em;
+            line-height: 1;
+        }
+
+        .score-out-of {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .result-summary h2 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 760;
+            letter-spacing: -0.04em;
+        }
+
+        .result-summary p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .analysis-source {
+            display: inline-flex;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border: 1px solid #dce9e5;
+            border-radius: 999px;
+            background: #f3f8f6;
+            color: #536b65;
+            font-size: 10px;
+            font-weight: 650;
+        }
+
+        .result-details {
+            display: grid;
+            padding-top: 18px;
+        }
+
+        .detail-heading {
+            margin: 0 0 9px;
+            color: #38564f;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+
+        .reason-list {
+            display: grid;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .reason-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: #465a55;
+            font-size: 12px;
+        }
+
+        .reason-list li::before {
+            width: 6px;
+            height: 6px;
+            flex: 0 0 6px;
+            margin-top: 6px;
+            border-radius: 50%;
+            background: var(--blue);
+            content: "";
+        }
+
+        .quiz-card {
+            margin-top: 24px;
+            padding: 24px 28px;
+            border: 1px solid #dfe9e5;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 12px 38px rgba(25, 54, 53, 0.055);
+        }
+
+        .quiz-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .quiz-kicker {
+            margin: 0 0 5px;
+            color: var(--blue);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }
+
+        .quiz-heading h2 {
+            margin: 0;
+            font-size: 19px;
+            letter-spacing: -0.04em;
+        }
+
+        .quiz-heading p {
+            max-width: 500px;
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .quiz-progress {
+            flex: 0 0 auto;
+            padding: 6px 9px;
+            border: 1px solid #dce9e5;
+            border-radius: 999px;
+            background: #f5f9f7;
+            color: #55736b;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .quiz-question {
+            margin: 0;
+            padding: 15px 0;
+            border: 0;
+            border-top: 1px solid #edf1ef;
+        }
+
+        .quiz-question legend {
+            width: 100%;
+            margin-bottom: 9px;
+            color: #334a44;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .quiz-option {
+            display: flex;
+            min-height: 40px;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 9px 10px;
+            border: 1px solid #e4ebe8;
+            border-radius: 9px;
+            background: #fff;
+            color: #53645f;
+            font-size: 11px;
+            line-height: 1.4;
+            cursor: pointer;
+            transition: border-color 150ms ease, background 150ms ease;
+        }
+
+        .quiz-option:hover {
+            border-color: #a9cec5;
+            background: #f8fbf9;
+        }
+
+        .quiz-option input {
+            flex: 0 0 auto;
+            margin: 2px 0 0;
+            accent-color: var(--blue);
+        }
+
+        .quiz-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 4px;
+        }
+
+        .quiz-feedback {
+            margin: 0;
+            color: #46655d;
+            font-size: 11px;
+        }
+
+        .quiz-feedback:empty {
+            display: none;
+        }
+
+        .privacy-strip {
+            display: flex;
+            justify-content: center;
+            gap: 9px;
+            margin: 22px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .privacy-strip svg {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 15px;
+            color: var(--green);
+        }
+
+        footer {
+            width: min(900px, calc(100% - 40px));
+            margin: 50px auto 25px;
+            color: #8792a4;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .reporting-help {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 20px;
+            padding: 22px 24px;
+            border: 1px solid #dce9e5;
+            border-radius: 15px;
+            background: linear-gradient(115deg, #edf5f2, #f8faf8);
+            color: var(--ink);
+            text-align: left;
+        }
+
+        .reporting-copy {
+            max-width: 470px;
+        }
+
+        .reporting-label {
+            margin: 0 0 5px;
+            color: var(--blue);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .reporting-help h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 750;
+            letter-spacing: -0.025em;
+        }
+
+        .reporting-copy > p:last-child {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .reporting-actions {
+            display: flex;
+            flex: 0 0 auto;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .reporting-link {
+            display: inline-flex;
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            padding: 0 13px;
+            border: 1px solid #d8e4e0;
+            border-radius: 8px;
+            background: white;
+            color: #344b4d;
+            font-size: 11px;
+            font-weight: 750;
+            text-decoration: none;
+            transition: border-color 150ms ease, background 150ms ease;
+        }
+
+        .reporting-link:hover {
+            border-color: #a9cec5;
+            background: #f6faf8;
+        }
+
+        .reporting-link-call {
+            border-color: var(--blue);
+            background: var(--blue);
+            color: white;
+        }
+
+        .reporting-link-call:hover {
+            border-color: var(--blue-dark);
+            background: var(--blue-dark);
+        }
+
+        @media (max-width: 640px) {
+            .topbar {
+                height: 66px;
+            }
+
+            main {
+                margin-top: 34px;
+            }
+
+            .intro {
+                margin-bottom: 23px;
+            }
+
+            .intro-copy {
+                font-size: 14px;
+            }
+
+            .card-heading {
+                padding: 21px 19px 0;
+            }
+
+            .form-area {
+                padding: 17px 19px 20px;
+            }
+
+            .result {
+                margin: 0 19px 20px;
+                padding: 17px;
+            }
+
+            .form-meta {
+                align-items: stretch;
+            }
+
+            .sample-row {
+                width: 100%;
+            }
+
+            .form-actions {
+                width: 100%;
+            }
+
+            .form-actions .button {
+                flex: 1;
+            }
+
+            .reporting-help {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 15px;
+                padding: 18px;
+            }
+
+            .reporting-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-card {
+                padding: 20px 18px;
+            }
+
+            .quiz-heading {
+                gap: 10px;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-actions {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg class="background-shield" viewBox="0 0 320 380" fill="none" aria-hidden="true">
+        <path d="M160 18 287 64v99c0 91-50 153-127 193C83 316 33 254 33 163V64L160 18Z" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
+        <path d="m105 180 38 38 76-83" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <header class="topbar">
+        <a class="brand" href="#" aria-label="CYBERSHIELD home">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3.5 19 6v5.3c0 4.5-2.9 7.7-7 9.2-4.1-1.5-7-4.7-7-9.2V6l7-2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="m9 12 2 2 4-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+            CYBERSHIELD
+        </a>
+        <span class="local-badge">AI-assisted risk analysis</span>
+    </header>
+
+    <main>
+        <section class="intro" aria-labelledby="page-title">
+            <p class="eyebrow">Cyber awareness · pause, check, stay safe</p>
+            <h1 id="page-title">STAY SAFE FROM CYBER SCAMS.</h1>
+            <p class="intro-copy">
+                Check message text and website URLs for possible scam warning signs. Gemini AI analyzes submissions when available, with a local pattern check as a fallback.
+            </p>
+        </section>
+
+        <section class="checker-card" aria-labelledby="checker-title">
+            <div class="card-heading">
+                <h2 id="checker-title">CHECK A MESSAGE OR LINK</h2>
+                <p>Gemini analyzes when available; otherwise a local check is used. Links are analyzed as text and never opened.</p>
+            </div>
+            <form id="checkerForm" class="form-area" novalidate>
+                <label for="inputText" class="visually-hidden">Message or link to check</label>
+                <div class="input-wrap">
+                    <textarea
+                        id="inputText"
+                        name="message"
+                        maxlength="5000"
+                        placeholder="Paste a text message, email, or website link here..."
+                        aria-describedby="charCount formError"
+                        required
+                    ></textarea>
+                    <span id="charCount" class="char-count" aria-live="polite">0 / 5000</span>
+                </div>
+                <p id="formError" class="form-error" role="alert"></p>
+                <div class="form-meta">
+                    <div class="sample-row" aria-label="Example messages">
+                        <span>Try an example:</span>
+                        <button class="sample-button" type="button" data-example="urgent">Urgent message</button>
+                        <button class="sample-button" type="button" data-example="link">Suspicious link</button>
+                        <button class="sample-button" type="button" data-example="normal">Normal text</button>
+                    </div>
+                    <div class="form-actions">
+                        <button id="clearButton" class="button button-secondary" type="button">Clear</button>
+                        <button class="button button-primary" type="submit">Check for warning signs</button>
+                    </div>
+                </div>
+            </form>
+
+            <section id="result" class="result" aria-labelledby="riskLevel" aria-live="polite" hidden>
+                <div class="result-top">
+                    <div id="scoreRing" class="score-ring" role="meter" aria-label="Risk score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="score-inner">
+                            <span id="scoreValue" class="score-value">0</span>
+                            <span class="score-out-of">% RISK</span>
+                        </div>
+                    </div>
+                    <div class="result-summary">
+                        <h2 id="riskLevel">LOW ESTIMATED RISK</h2>
+                        <p id="riskSummary">No obvious warning signs were detected.</p>
+                        <span id="analysisSource" class="analysis-source">Analysis source</span>
+                        <span class="analysis-source">Indicator score, not a verified probability or live website reputation check</span>
+                    </div>
+                </div>
+                <div class="result-details">
+                    <div>
+                        <h3 class="detail-heading">Why this score?</h3>
+                        <ul id="reasons" class="reason-list"></ul>
+                    </div>
+                </div>
+                </section>
+        </section>
+
+        <section class="quiz-card" aria-labelledby="quiz-title">
+                <div class="quiz-heading">
+                    <div>
+                        <p class="quiz-kicker">Cyber safety mini-quiz</p>
+                        <h2 id="quiz-title">Would you trust this link?</h2>
+                        <p>Practice a few checks that can help you spot risky links before opening them.</p>
+                    </div>
+                    <span id="quizProgress" class="quiz-progress">Quiz 1 · 3 questions</span>
+                </div>
+                <form id="quizForm">
+                    <div id="quizQuestions"></div>
+                    <div class="quiz-actions">
+                        <button class="button button-primary" type="submit">Check my answers</button>
+                        <button id="nextQuizButton" class="button button-secondary" type="button" hidden>Next quiz</button>
+                        <p id="quizFeedback" class="quiz-feedback" role="status" aria-live="polite"></p>
+                    </div>
+                </form>
+        </section>
+
+        <p class="privacy-strip">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M10 2.5 16 4.7v4.6c0 3.8-2.5 6.5-6 7.8-3.5-1.3-6-4-6-7.8V4.7l6-2.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="m7.5 9.8 1.7 1.7 3.4-3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Gemini receives your text when the server is available. If this page is opened as a file, analysis stays in your browser. Never enter passwords, PINs, or one-time codes.</span>
+        </p>
+    </main>
+
+    <footer>
+        <section class="reporting-help" aria-labelledby="reporting-title">
+            <div class="reporting-copy">
+                <p class="reporting-label">Official help in India</p>
+                <h2 id="reporting-title">National Cyber Crime Reporting Portal</h2>
+                <p>
+                    If you are a victim of online financial fraud, call 1930 as soon as possible. You can also report cybercrime through the official Government of India portal.
+                </p>
+            </div>
+            <div class="reporting-actions">
+                <a class="reporting-link reporting-link-call" href="tel:1930" aria-label="Call the cyber financial fraud helpline at 1930">Call 1930</a>
+                <a class="reporting-link" href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer">Visit cybercrime.gov.in</a>
+            </div>
+        </section>
+        AI analysis can be mistaken and cannot confirm whether a sender, website, or offer is genuine. Links are analyzed as text and are not opened or verified.
+    </footer>
+
+    <style>
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            clip-path: inset(50%);
+        }
+    </style>
+
+    <script>
+        (() => {
+            const form = document.getElementById("checkerForm");
+            const input = document.getElementById("inputText");
+            const charCount = document.getElementById("charCount");
+            const formError = document.getElementById("formError");
+            const result = document.getElementById("result");
+            const riskLevel = document.getElementById("riskLevel");
+            const riskSummary = document.getElementById("riskSummary");
+            const scoreRing = document.getElementById("scoreRing");
+            const scoreValue = document.getElementById("scoreValue");
+            const analysisSource = document.getElementById("analysisSource");
+            const reasonsList = document.getElementById("reasons");
+
+            function analyzeLocally(text) {
+                const reasons = new Set();
+                let messageScore = 0;
+                let linkScore = 0;
+                let hasSensitiveRequest = false;
+                let hasUrgency = false;
+                let hasCredentialLink = false;
+                const normalizedText = text.toLowerCase();
+                const messageSignals = [
+                    {
+                        pattern: /\b(?:send|share|reply with|provide|enter|submit|tell me|give us|confirm)\b[\s\S]{0,45}\b(?:otp|one[- ]time password|verification code|password|passcode|cvv|pin|card number|bank details)\b|\b(?:otp|one[- ]time password|verification code|password|passcode|cvv|pin|card number|bank details)\b[\s\S]{0,45}\b(?:send|share|reply with|provide|enter|submit|tell me|give us)\b/i,
+                        points: 55,
+                        reason: "The message asks you to share or enter a one-time code, password, PIN, or payment detail.",
+                        category: "sensitive"
+                    },
+                    {
+                        pattern: /\b(?:urgent|immediately|act now|right now|within \d+ hours?|final warning|last chance|account (?:blocked|suspended|closed|will be disabled)|service will be stopped)\b/i,
+                        points: 22,
+                        reason: "It uses urgency or threatens to block or suspend an account.",
+                        category: "urgency"
+                    },
+                    {
+                        pattern: /\b(?:kyc|verify|verification|confirm|update|reactivate)\b[\s\S]{0,45}\b(?:account|bank|wallet|identity|details|payment)\b|\b(?:account|bank|wallet|identity)\b[\s\S]{0,45}\b(?:kyc|verify|verification|confirm|update|reactivate)\b/i,
+                        points: 18,
+                        reason: "It pressures you to verify, update, or reactivate an account.",
+                        category: "verification"
+                    },
+                    {
+                        pattern: /\b(?:lottery|winner|won|cash prize|free money|claim your (?:prize|reward)|selected for a reward|gift card)\b/i,
+                        points: 42,
+                        reason: "It promises unexpected prize money, a reward, or a gift.",
+                        category: "prize"
+                    },
+                    {
+                        pattern: /\b(?:police|customs|court)\b[\s\S]{0,45}\b(?:arrest|warrant|case registered|legal action)\b|\b(?:arrest|warrant|case registered|legal action)\b[\s\S]{0,45}\b(?:police|customs|court)\b/i,
+                        points: 24,
+                        reason: "It uses threats involving police, customs, or legal action.",
+                        category: "threat"
+                    },
+                    {
+                        pattern: /\b(?:pay|transfer|send)\b[\s\S]{0,35}\b(?:fee|tax|fine|deposit|crypto|cryptocurrency|gift card|wallet)\b|\b(?:fee|tax|fine|deposit)\b[\s\S]{0,35}\b(?:pay|transfer|send)\b/i,
+                        points: 18,
+                        reason: "It requests an unexpected payment, transfer, cryptocurrency, or gift card.",
+                        category: "payment"
+                    },
+                    {
+                        pattern: /\b(?:install|download|open)\b[\s\S]{0,35}\b[\w.-]+\.(?:apk|exe|msi|zip)\b|\b(?:apk|exe|msi)\b/i,
+                        points: 22,
+                        reason: "It asks you to install or download a potentially unsafe file.",
+                        category: "download"
+                    }
+                ];
+
+                for (const signal of messageSignals) {
+                    if (signal.pattern.test(text)) {
+                        const sensitiveMatch = signal.category === "sensitive"
+                            ? signal.pattern.exec(text)
+                            : null;
+                        const previousText = sensitiveMatch
+                            ? text.slice(Math.max(0, sensitiveMatch.index - 35), sensitiveMatch.index)
+                            : "";
+                        const explicitlyWarnsAgainstSharing = /\b(?:never|don't|do not|not|avoid)\b[^.!?]{0,30}$/i.test(previousText);
+                        if (signal.category === "sensitive" && explicitlyWarnsAgainstSharing) {
+                            continue;
+                        }
+
+                        messageScore += signal.points;
+                        reasons.add(signal.reason);
+                        if (signal.category === "sensitive") hasSensitiveRequest = true;
+                        if (signal.category === "urgency" || signal.category === "threat") hasUrgency = true;
+                    }
+                }
+
+                const urls = text.match(/(?:https?:\/\/|www\.)[^\s<>"']+/gi) || [];
+                const bareDomains = text.match(/(?:^|[\s(])((?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,})(?::\d+)?(?:\/[^\s<>"']*)?/gi) || [];
+                for (const candidate of bareDomains) {
+                    const domain = candidate.trim().replace(/^[([]/, "");
+                    if (!/@[\w.-]+$/.test(domain)) urls.push(domain);
+                }
+                const uniqueUrls = [...new Set(urls.map(url => url.replace(/[),.!?;:]+$/, "")))];
+                const suspiciousTlds = new Set(["xyz", "top", "tk", "click", "gq", "cf", "ml"]);
+                const shorteners = new Set(["bit.ly", "tinyurl.com", "t.co", "goo.gl", "cutt.ly", "is.gd", "ow.ly"]);
+                const brands = ["paypal", "google", "amazon", "facebook", "instagram", "whatsapp", "paytm", "phonepe", "sbi", "hdfc", "icici"];
+
+                for (const candidate of uniqueUrls) {
+                    const cleaned = candidate;
+                    const normalized = /^https?:\/\//i.test(cleaned) ? cleaned : `https://${cleaned}`;
+                    let parsed;
+
+                    try {
+                        parsed = new URL(normalized);
+                    } catch {
+                        continue;
+                    }
+
+                    const hostname = parsed.hostname.toLowerCase();
+                    const labels = hostname.split(".");
+                    const tld = labels[labels.length - 1];
+
+                    if (/^http:\/\//i.test(cleaned)) {
+                        linkScore += 10;
+                        reasons.add("The link uses HTTP instead of an encrypted HTTPS connection.");
+                    }
+                    if (suspiciousTlds.has(tld)) {
+                        linkScore += 40;
+                        reasons.add(`The domain uses the uncommon .${tld} ending.`);
+                    }
+                    if (parsed.username || parsed.password) {
+                        linkScore += 30;
+                        reasons.add("The URL hides its actual destination behind embedded sign-in details.");
+                    }
+                    if (/^(\d{1,3}\.){3}\d{1,3}$/.test(hostname)) {
+                        linkScore += 35;
+                        reasons.add("The link points directly to a numeric IP address.");
+                    }
+                    if (hostname.includes("xn--")) {
+                        linkScore += 30;
+                        reasons.add("The domain uses encoded characters that can disguise its spelling.");
+                    }
+                    if (shorteners.has(hostname)) {
+                        linkScore += 22;
+                        reasons.add("The link uses a URL shortener that hides its final destination.");
+                    }
+                    const credentialPath = /(login|signin|verify|secure|update|password|account|banking|wallet)/i.test(`${hostname}${parsed.pathname}`);
+                    if (credentialPath) {
+                        linkScore += 20;
+                        hasCredentialLink = true;
+                        reasons.add("The URL contains sign-in, account, or verification wording.");
+                    }
+
+                    for (const brand of brands) {
+                        const brandAppearsInHost = labels.some(label => label.includes(brand));
+                        const genuineBrandHost = hostname === `${brand}.com` ||
+                            hostname.endsWith(`.${brand}.com`) ||
+                            (brand === "sbi" && (hostname === "sbi.co.in" || hostname.endsWith(".sbi.co.in"))) ||
+                            (brand === "hdfc" && (hostname === "hdfcbank.com" || hostname.endsWith(".hdfcbank.com"))) ||
+                            (brand === "icici" && (hostname === "icicibank.com" || hostname.endsWith(".icicibank.com"))) ||
+                            (brand === "phonepe" && hostname.endsWith(".phonepe.com")) ||
+                            (brand === "paytm" && hostname.endsWith(".paytm.com"));
+                        if (brandAppearsInHost && !genuineBrandHost) {
+                            linkScore += 40;
+                            reasons.add(`The domain appears to impersonate ${brand}; its actual domain is not an obvious official match.`);
+                            break;
+                        }
+                    }
+                }
+
+                let score = Math.min(Math.min(messageScore, 80) + Math.min(linkScore, 90), 100);
+                if (hasSensitiveRequest && hasUrgency) {
+                    score = Math.max(score, 85);
+                    reasons.add("A request for sensitive information is combined with pressure to act quickly.");
+                }
+                if (hasSensitiveRequest && (uniqueUrls.length > 0 || hasCredentialLink)) {
+                    score = Math.max(score, 85);
+                    reasons.add("A request for sensitive information is paired with a link.");
+                }
+                if (hasCredentialLink && linkScore >= 40) {
+                    score = Math.max(score, 75);
+                }
+                if (/\b(?:won|winner|lottery|cash prize|free money)\b/i.test(normalizedText) &&
+                    /\b(?:click|claim|collect|pay|fee|tax|send|transfer)\b/i.test(normalizedText)) {
+                    score = Math.max(score, 50);
+                    reasons.add("The unexpected prize is paired with a request to click, claim, pay, or transfer money.");
+                }
+
+                if (reasons.size === 0) {
+                    reasons.add("No common scam indicators were detected in this text.");
+                }
+
+                const summary = score >= 70
+                    ? "Multiple strong warning signs were found. Do not open the link or share information; verify through an official channel."
+                    : score >= 40
+                        ? "Some warning signs were found. Be cautious and verify independently before taking action."
+                        : "Few known warning signs were detected, but this does not prove the message or link is safe.";
+                return {
+                    score,
+                    reasons: [...reasons].slice(0, 7),
+                    summary,
+                    source: "Local checks · Gemini server not connected"
+                };
+            }
+
+            function renderResult(analysis) {
+                const { score, reasons } = analysis;
+                let level;
+                let color;
+
+                if (score >= 70) {
+                    level = "HIGH ESTIMATED RISK";
+                    color = "var(--red)";
+                } else if (score >= 40) {
+                    level = "MEDIUM ESTIMATED RISK";
+                    color = "var(--orange)";
+                } else {
+                    level = "LOW ESTIMATED RISK";
+                    color = "var(--green)";
+                }
+
+                scoreRing.style.setProperty("--score-color", color);
+                scoreRing.style.setProperty("--score-angle", `${score * 3.6}deg`);
+                scoreRing.setAttribute("aria-valuenow", String(score));
+                scoreRing.setAttribute("aria-valuetext", `${score} out of 100`);
+                scoreValue.textContent = `${score}%`;
+                riskLevel.textContent = level;
+                riskLevel.style.color = color;
+                riskSummary.textContent = analysis.summary;
+                analysisSource.textContent = analysis.source;
+                reasonsList.replaceChildren();
+
+                for (const reason of reasons) {
+                    const item = document.createElement("li");
+                    item.textContent = reason;
+                    reasonsList.appendChild(item);
+                }
+
+                result.hidden = false;
+            }
+
+            async function analyzeWithGemini(text) {
+                if (window.location.protocol === "file:") {
+                    return analyzeLocally(text);
+                }
+
+                const response = await fetch("/api/analyze", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text })
+                });
+                const contentType = response.headers.get("content-type") || "";
+                const responseText = await response.text();
+
+                if (!contentType.toLowerCase().includes("application/json")) {
+                    throw new Error("The AI service did not return a valid analysis.");
+                }
+
+                let payload;
+                try {
+                    payload = JSON.parse(responseText);
+                } catch {
+                    throw new Error("The AI service did not return a valid analysis.");
+                }
+
+                if (!response.ok) {
+                    throw new Error(payload.error || "The AI service is temporarily unavailable.");
+                }
+                if (
+                    !Number.isInteger(payload.score) ||
+                    payload.score < 0 ||
+                    payload.score > 100 ||
+                    !Array.isArray(payload.reasons) ||
+                    payload.reasons.some(reason => typeof reason !== "string") ||
+                    typeof payload.summary !== "string"
+                ) {
+                    throw new Error("The AI service returned an incomplete analysis.");
+                }
+
+                return { ...payload, source: "Gemini AI analysis" };
+            }
+
+            input.addEventListener("input", () => {
+                charCount.textContent = `${input.value.length} / 5000`;
+                formError.textContent = "";
+            });
+
+            form.addEventListener("submit", event => {
+                event.preventDefault();
+                const text = input.value.trim();
+
+                if (text.length < 5) {
+                    formError.textContent = "Enter at least 5 characters to check.";
+                    input.focus();
+                    result.hidden = true;
+                    return;
+                }
+
+                formError.textContent = "";
+                result.hidden = true;
+
+                const submitButton = form.querySelector('button[type="submit"]');
+                const clearButton = document.getElementById("clearButton");
+                submitButton.disabled = true;
+                clearButton.disabled = true;
+                input.disabled = true;
+                submitButton.textContent = "Analyzing...";
+                form.setAttribute("aria-busy", "true");
+
+                const localAnalysis = analyzeLocally(text);
+                analyzeWithGemini(text)
+                    .then(aiAnalysis => ({
+                        ...aiAnalysis,
+                        score: Math.max(aiAnalysis.score, localAnalysis.score),
+                        reasons: [...new Set([...aiAnalysis.reasons, ...localAnalysis.reasons])].slice(0, 7),
+                        summary: localAnalysis.score > aiAnalysis.score
+                            ? `${localAnalysis.summary} Local warning signs increased the score.`
+                            : aiAnalysis.summary,
+                        source: "Gemini AI + local checks"
+                    }))
+                    .catch(() => localAnalysis)
+                    .then(renderResult)
+                    .catch(() => {
+                        formError.textContent = "Analysis could not be completed. Please try again.";
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        clearButton.disabled = false;
+                        input.disabled = false;
+                        submitButton.textContent = "Check for warning signs";
+                        form.removeAttribute("aria-busy");
+                    });
+            });
+
+            document.getElementById("clearButton").addEventListener("click", () => {
+                input.value = "";
+                charCount.textContent = "0 / 5000";
+                formError.textContent = "";
+                result.hidden = true;
+                input.focus();
+            });
+
+            document.querySelectorAll("[data-example]").forEach(button => {
+                button.addEventListener("click", () => {
+                    const examples = {
+                        urgent: "URGENT: Your bank account is blocked. Verify your KYC immediately to avoid suspension. Reply with your OTP.",
+                        link: "Your PayPal account needs verification: http://paypal-login-check.xyz/secure/update",
+                        normal: "Hey! Are we still meeting for lunch at 12:30? Let me know when you get a chance."
+                    };
+
+                    input.value = examples[button.dataset.example];
+                    input.dispatchEvent(new Event("input", { bubbles: true }));
+                    input.focus();
+                    result.hidden = true;
+                });
+            });
+
+            const quizForm = document.getElementById("quizForm");
+            const quizQuestions = document.getElementById("quizQuestions");
+            const quizProgress = document.getElementById("quizProgress");
+            const quizFeedback = document.getElementById("quizFeedback");
+            const quizSubmit = quizForm.querySelector('button[type="submit"]');
+            const nextQuizButton = document.getElementById("nextQuizButton");
+            const questionBank = [
+                {
+                    question: "A text says your account will be closed unless you verify it now. What is safest?",
+                    options: ["Tap its link to avoid losing access.", "Open the official app or type the known website address yourself.", "Reply with your account details and ask if it is real."],
+                    answer: 1,
+                    explanation: "Use the official app or a known address, not an unexpected message link."
+                },
+                {
+                    question: "A link contains a bank's name, but the domain ends in an unfamiliar suffix. What should you do?",
+                    options: ["Trust it because the bank's name appears in the link.", "Check the exact domain independently; don't rely on brand names in a URL.", "Open it in private browsing to make it safe."],
+                    answer: 1,
+                    explanation: "Brand names can appear in fake domains. Confirm the real domain independently."
+                },
+                {
+                    question: "Someone asks you to share a one-time password to stop a payment. What is the right response?",
+                    options: ["Share it only if the message looks official.", "Never share it; contact your bank through an official channel.", "Send it after asking the sender for their name."],
+                    answer: 1,
+                    explanation: "Never share a one-time password; contact your bank using its official number or app."
+                },
+                {
+                    question: "You receive an unexpected attachment named invoice.apk. What should you do?",
+                    options: ["Install it to check whether the invoice is real.", "Do not install it; verify with the sender through a separate trusted channel.", "Forward it to a friend to test it."],
+                    answer: 1,
+                    explanation: "Unexpected app files can install harmful software. Verify first and don't open the file."
+                },
+                {
+                    question: "A caller claims to be police and demands an instant gift-card payment to avoid arrest. What is safest?",
+                    options: ["Pay quickly to avoid trouble.", "Hang up and independently contact the official agency or local authorities.", "Give the caller your banking PIN so they can check."],
+                    answer: 1,
+                    explanation: "Threats and unusual payment methods are warning signs; verify independently."
+                },
+                {
+                    question: "A shortened link arrives from an unknown number. What should you do?",
+                    options: ["Open it because shortened links are always safe.", "Avoid opening it and verify who sent it and where it leads through a trusted channel.", "Reply with your personal details first."],
+                    answer: 1,
+                    explanation: "Short links hide their destination. Verify the sender and destination before opening."
+                },
+                {
+                    question: "A stranger offers guaranteed investment returns if you transfer cryptocurrency today. What is safest?",
+                    options: ["Transfer a small amount to test the offer.", "Treat guaranteed returns and pressure to act as warning signs; verify independently.", "Share your wallet recovery phrase so they can help."],
+                    answer: 1,
+                    explanation: "Guaranteed returns, urgency, and requests for crypto or recovery phrases are serious red flags."
+                },
+                {
+                    question: "A support agent in a pop-up asks for remote access to fix your computer. What should you do?",
+                    options: ["Allow access if the pop-up has a company logo.", "Close the pop-up and contact support using the company's official website or number.", "Tell them your password so they can diagnose the issue."],
+                    answer: 1,
+                    explanation: "Pop-ups can imitate trusted brands. Reach support through a source you find independently."
+                },
+                {
+                    question: "A prize message says you must pay a processing fee before receiving your winnings. What is a safe response?",
+                    options: ["Pay the fee because prizes often require it.", "Do not pay; verify the promotion using the organization's official website.", "Send your card number to reserve the prize."],
+                    answer: 1,
+                    explanation: "Unexpected prizes that require fees or payment details are a common scam pattern."
+                },
+                {
+                    question: "You get a login alert you did not request. What should you do?",
+                    options: ["Tap the alert's link and enter your password.", "Open the service's official app or known website, change your password if needed, and enable two-factor authentication.", "Reply to the alert with your current password."],
+                    answer: 1,
+                    explanation: "Check account alerts through the official app or known address, not through an unexpected link."
+                },
+                {
+                    question: "A QR code on a random flyer offers a coupon. What is the safer choice?",
+                    options: ["Scan and sign in wherever it sends you.", "Check the source first; don't enter credentials or payment details on an unexpected page.", "Share your one-time code to unlock the coupon."],
+                    answer: 1,
+                    explanation: "QR codes can hide links. Verify the source and be cautious if a page asks for sensitive data."
+                },
+                {
+                    question: "A friend messages from a new number asking for emergency money. What should you do?",
+                    options: ["Transfer immediately because it sounds urgent.", "Call your friend on a number you already know to confirm the request.", "Ask them to send a one-time password as proof."],
+                    answer: 1,
+                    explanation: "Confirm urgent payment requests using a known contact method, not the new chat."
+                }
+            ];
+            let quizRound = 1;
+            let questionBag = questionBank.map((_, index) => index).slice(3);
+            let currentQuestions = [];
+
+            function shuffle(values) {
+                for (let index = values.length - 1; index > 0; index -= 1) {
+                    const swapIndex = Math.floor(Math.random() * (index + 1));
+                    [values[index], values[swapIndex]] = [values[swapIndex], values[index]];
+                }
+                return values;
+            }
+
+            function drawQuizQuestions() {
+                if (questionBag.length < 3) {
+                    questionBag = shuffle(questionBank.map((_, index) => index));
+                }
+                return questionBag.splice(0, 3).map(index => questionBank[index]);
+            }
+
+            function renderQuizQuestions(questions) {
+                quizQuestions.replaceChildren();
+
+                questions.forEach((question, questionIndex) => {
+                    const fieldset = document.createElement("fieldset");
+                    fieldset.className = "quiz-question";
+
+                    const legend = document.createElement("legend");
+                    legend.textContent = `${questionIndex + 1}. ${question.question}`;
+                    fieldset.appendChild(legend);
+
+                    const options = document.createElement("div");
+                    options.className = "quiz-options";
+
+                    question.options.forEach((option, optionIndex) => {
+                        const label = document.createElement("label");
+                        label.className = "quiz-option";
+
+                        const radio = document.createElement("input");
+                        radio.type = "radio";
+                        radio.name = `quiz${questionIndex + 1}`;
+                        radio.value = String(optionIndex);
+                        radio.required = true;
+
+                        label.append(radio, document.createTextNode(option));
+                        options.appendChild(label);
+                    });
+
+                    fieldset.appendChild(options);
+                    quizQuestions.appendChild(fieldset);
+                });
+            }
+
+            function startQuizRound(questions) {
+                currentQuestions = questions;
+                quizProgress.textContent = `Quiz ${quizRound} · 3 questions`;
+                quizFeedback.textContent = "";
+                quizSubmit.disabled = false;
+                nextQuizButton.hidden = true;
+                renderQuizQuestions(currentQuestions);
+            }
+
+            startQuizRound(questionBank.slice(0, 3));
+
+            quizForm.addEventListener("submit", event => {
+                event.preventDefault();
+                const answers = new FormData(quizForm);
+                let score = 0;
+                const explanations = [];
+
+                currentQuestions.forEach((question, questionIndex) => {
+                    const isCorrect = Number(answers.get(`quiz${questionIndex + 1}`)) === question.answer;
+                    if (isCorrect) score += 1;
+                    explanations.push(`${isCorrect ? "Correct" : "Review"}: ${question.explanation}`);
+                });
+
+                quizFeedback.textContent = `${score}/3 correct. ${explanations.join(" ")}`;
+                quizQuestions.querySelectorAll("input").forEach(inputOption => {
+                    inputOption.disabled = true;
+                });
+                quizSubmit.disabled = true;
+                nextQuizButton.hidden = false;
+            });
+
+            nextQuizButton.addEventListener("click", () => {
+                quizRound += 1;
+                startQuizRound(drawQuizQuestions());
+            });
+        })();
+    </script>
+</body>
+</html>

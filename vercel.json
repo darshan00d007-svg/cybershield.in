@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/api/index" },
+    { "source": "/scam-checker.html", "destination": "/api/index" }
+  ]
+}
